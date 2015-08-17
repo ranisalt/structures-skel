@@ -70,35 +70,35 @@ typename stack<T, max_size>::size_type stack<T, max_size>::size() const noexcept
 template<typename T, int max_size>
 void stack<T, max_size>::push(const T& value)
 {
-	if (_size < max_size) {
-		_array[_size] = value;
-		++_size;
-	} else {
+	if (_size == max_size) {
 		throw std::out_of_range("Stack is full.");
 	}
+
+	_array[_size] = value;
+	++_size;
 }
 
 template<typename T, int max_size>
 void stack<T, max_size>::push(T&& value)
 {
-	if (_size < max_size) {
-		_array[_size] = value;
-		++_size;
-	} else {
+	if (_size == max_size) {
 		throw std::out_of_range("Stack is full.");
 	}
+
+	_array[_size] = value;
+	++_size;
 }
 
 template<typename T, int max_size>
 template<typename... Args>
 void stack<T, max_size>::emplace(Args&& ... args)
 {
-	if (_size < max_size) {
-		_array[_size] = T(std::forward<Args>(args)...);
-		++_size;
-	} else {
+	if (_size == max_size) {
 		throw std::out_of_range("Stack is full.");
 	}
+
+	_array[_size] = T(std::forward<Args>(args)...);
+	++_size;
 };
 
 template<typename T, int max_size>

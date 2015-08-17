@@ -86,35 +86,35 @@ typename queue<T, max_size>::size_type queue<T, max_size>::size() const noexcept
 template<typename T, int max_size>
 void queue<T, max_size>::push(const T& value)
 {
-	if (_size < max_size) {
-		_array[_size] = value;
-		++_size;
-	} else {
-		throw std::out_of_range("queue is full.");
+	if (_size == max_size) {
+		throw std::out_of_range("Queue is full.");
 	}
+
+	_array[_size] = value;
+	++_size;
 }
 
 template<typename T, int max_size>
 void queue<T, max_size>::push(T&& value)
 {
-	if (_size < max_size) {
-		_array[_size] = value;
-		++_size;
-	} else {
-		throw std::out_of_range("queue is full.");
+	if (_size == max_size) {
+		throw std::out_of_range("Queue is full.");
 	}
+
+	_array[_size] = value;
+	++_size;
 }
 
 template<typename T, int max_size>
 template<typename... Args>
 void queue<T, max_size>::emplace(Args&& ... args)
 {
-	if (_size < max_size) {
-		_array[_size] = T(std::forward<Args>(args)...);
-		++_size;
-	} else {
-		throw std::out_of_range("queue is full.");
+	if (_size == max_size) {
+		throw std::out_of_range("Queue is full.");
 	}
+
+	_array[_size] = T(std::forward<Args>(args)...);
+	++_size;
 };
 
 template<typename T, int max_size>
