@@ -120,7 +120,7 @@ void queue<T, max_size>::emplace(Args&& ... args)
 template<typename T, int max_size>
 void queue<T, max_size>::pop()
 {
-	std::copy(std::next(_array.begin()), _array.end(), _array.begin());
+	std::move(std::next(_array.begin()), std::next(_array.begin(), _size), _array.begin());
 	_size = std::max(0UL, --_size);
 }
 
