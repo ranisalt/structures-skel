@@ -1,3 +1,4 @@
+#include <chrono>
 #include <gtest/gtest.h>
 #include "stack.h"
 
@@ -79,4 +80,44 @@ TEST_F(StackTest, swap)
 	std::swap(s, t);
 	EXPECT_EQ(s.top(), 1963);
 	EXPECT_EQ(t.top(), 42);
+}
+
+TEST_F(StackTest, stressInsertion)
+{
+	using us = std::chrono::microseconds;
+	using clock = std::chrono::high_resolution_clock;
+
+	const int qty = 1 << 20;
+	stack<int, qty> t;
+
+	auto start = clock::now();
+	for (auto i = 0; i < qty; ++i) {
+		t.push(i);
+		ASSERT_EQ(i, t.top());
+	}
+	auto duration = std::chrono::duration_cast<us>(clock::now() - start);
+
+	EXPECT_GE(100000, duration.count());
+}
+
+TEST_F(StackTest, stressRemoval)
+{
+	using us = std::chrono::microseconds;
+	using clock = std::chrono::high_resolution_clock;
+
+	const int qty = 1 << 20;
+	stack<int, qty> t;
+
+	for (auto i = 0; i < qty; ++i) {
+		t.push(i);
+	}
+
+	auto start = clock::now();
+	for (auto i = qty - 1; i >= 0; --i) {
+		ASSERT_EQ(i, t.top());
+		t.pop();
+	}
+	auto duration = std::chrono::duration_cast<us>(clock::now() - start);
+
+	EXPECT_GE(100000, duration.count());
 }
