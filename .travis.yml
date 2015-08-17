@@ -1,0 +1,14 @@
+language: cpp
+
+install:
+    - sudo apt-get install libgtest-dev -qq
+    - pushd /usr/src/gtest
+    - sudo cmake .
+    - sudo cmake --build .
+    - sudo cp libgtest* /usr/lib
+    - popd
+
+script:
+    - cmake .
+    - cmake --build .
+    - ./unittest
