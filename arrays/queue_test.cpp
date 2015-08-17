@@ -138,5 +138,5 @@ TEST_F(QueueTest, stressRemoval)
 	}
 	auto duration = std::chrono::duration_cast<us>(clock::now() - start);
 
-	EXPECT_GE(120000, duration.count());
+	EXPECT_GE(160000, duration.count());
 }
